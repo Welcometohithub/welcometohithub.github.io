@@ -165,5 +165,46 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.style.animation = `fadeInUp 0.9s ease-out ${0.5 + index * 0.08}s forwards`;
     btn.style.opacity = '0';
   });
+
+  // Parallax effect on mouse movement
+  const heroContent = document.querySelector('.hero-content');
+  const particlesCanvas = document.getElementById('neural-net-canvas');
+  
+  if (heroContent && particlesCanvas) {
+    document.addEventListener('mousemove', (e) => {
+      const moveX = (e.clientX - window.innerWidth / 2) * 0.02;
+      const moveY = (e.clientY - window.innerHeight / 2) * 0.02;
+      
+      heroContent.style.transform = `translate(${moveX}px, ${moveY * 0.5}px)`;
+      particlesCanvas.style.opacity = (0.18 + (e.clientY / window.innerHeight) * 0.05).toString();
+    });
+  }
+
+  // Smooth scroll parallax for background layers
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const particlesJS = document.getElementById('particles-js');
+    const binaryTexture = document.querySelector('.binary-texture');
+    
+    if (particlesJS) {
+      particlesJS.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+    if (binaryTexture) {
+      binaryTexture.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
+  });
+
+  // Interactive name glow enhancement
+  const nameElement = document.querySelector('.name');
+  if (nameElement) {
+    nameElement.addEventListener('mouseenter', function() {
+      this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      this.style.textShadow = '0 0 40px rgba(56, 189, 248, 0.3)';
+    });
+    
+    nameElement.addEventListener('mouseleave', function() {
+      this.style.textShadow = '';
+    });
+  }
 });
 

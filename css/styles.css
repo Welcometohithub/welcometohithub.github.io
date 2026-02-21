@@ -119,9 +119,48 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: fadeInDown 0.9s ease-out forwards;
+  animation: fadeInDown 0.9s ease-out forwards, namePulse 4s ease-in-out 1s infinite;
   filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.15));
   line-height: 1.1;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.name::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(34, 211, 238, 0.04) 40%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: -1;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+@keyframes namePulse {
+  0%, 100% {
+    text-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+  }
 }
 
 @keyframes fadeInDown {
@@ -136,31 +175,41 @@ body {
 }
 
 .name:hover {
-  filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.25));
-  transition: filter 0.4s ease;
+  filter: drop-shadow(0 0 35px rgba(56, 189, 248, 0.35));
+  transform: translateY(-3px);
+}
+
+.name:hover::before {
+  opacity: 0.9;
 }
 
 /* ============ ROLE BADGE ============ */
 .role-badge {
   display: inline-block;
-  padding: 8px 18px;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: 10px 20px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
+  border-radius: 25px;
+  font-size: 0.9rem;
   font-weight: 500;
   color: #38bdf8;
   margin-bottom: 30px;
-  animation: fadeInUp 0.9s ease-out 0.1s forwards;
+  animation: fadeInUp 1s ease-out 0.1s forwards;
   opacity: 0;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
+  letter-spacing: 0.6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.08);
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 .role-badge:hover {
   background: rgba(56, 189, 248, 0.15);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 8px 30px rgba(56, 189, 248, 0.2);
+  transform: translateY(-2px);
+  backdrop-filter: blur(10px);
 }
 
 /* ============ HEADLINE ============ */
@@ -169,16 +218,23 @@ body {
   font-weight: 600;
   margin: 0 0 20px 0;
   color: #f1f5f9;
-  line-height: 1.5;
-  animation: fadeInUp 0.9s ease-out 0.2s forwards;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease-out 0.2s forwards;
   opacity: 0;
   letter-spacing: 0.5px;
+  word-spacing: 0.1em;
 }
 
 .accent-pipe {
   color: #38bdf8;
   margin: 0 12px;
   opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.headline:hover .accent-pipe {
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
 }
 
 /* ============ SUBTEXT ============ */
@@ -188,10 +244,11 @@ body {
   color: #cbd5e1;
   margin: 0 0 30px 0;
   max-width: 700px;
-  line-height: 1.8;
-  animation: fadeInUp 0.9s ease-out 0.3s forwards;
+  line-height: 1.9;
+  animation: fadeInUp 1s ease-out 0.3s forwards;
   opacity: 0;
   letter-spacing: 0.3px;
+  transition: color 0.3s ease;
 }
 
 /* ============ CREDENTIALS STRIP ============ */
@@ -200,16 +257,27 @@ body {
   font-weight: 400;
   color: #94a3b8;
   margin: 0 0 12px 0;
-  animation: fadeInUp 0.9s ease-out 0.4s forwards;
+  animation: fadeInUp 1s ease-out 0.4s forwards;
   opacity: 0;
   letter-spacing: 0.3px;
   line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+.credentials-strip:hover {
+  color: #cbd5e1;
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.1);
 }
 
 .credentials-strip .divider {
   color: #475569;
   margin: 0 8px;
   opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.credentials-strip:hover .divider {
+  opacity: 1;
 }
 
 /* ============ CREDIBILITY LINE ============ */
@@ -218,10 +286,11 @@ body {
   font-weight: 400;
   color: #64748b;
   margin: 0 0 35px 0;
-  animation: fadeInUp 0.9s ease-out 0.45s forwards;
+  animation: fadeInUp 1s ease-out 0.45s forwards;
   opacity: 0;
   letter-spacing: 0.2px;
   font-style: italic;
+  transition: color 0.3s ease;
 }
 
 /* ============ CTA BUTTONS ============ */
@@ -230,14 +299,14 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  animation: fadeInUp 0.9s ease-out 0.5s forwards;
+  animation: fadeInUp 1s ease-out 0.5s forwards;
   opacity: 0;
 }
 
 .btn-primary,
 .btn-secondary {
   padding: 12px 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-family: 'Poppins', sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
@@ -249,32 +318,40 @@ body {
   display: inline-block;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .btn-primary {
-  background: #38bdf8;
+  background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
   color: #000;
-  border: 2px solid #38bdf8;
+  border: 2px solid rgba(56, 189, 248, 0.5);
+  box-shadow: 0 8px 32px rgba(56, 189, 248, 0.15);
 }
 
 .btn-primary:hover {
-  background: #22d3ee;
+  background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
   border-color: #22d3ee;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(56, 189, 248, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: transparent;
+  background: rgba(56, 189, 248, 0.08);
   color: #38bdf8;
-  border: 2px solid rgba(56, 189, 248, 0.4);
+  border: 2px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 8px 32px rgba(56, 189, 248, 0.05);
 }
 
 .btn-secondary:hover {
   border-color: #38bdf8;
-  background: rgba(56, 189, 248, 0.1);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+  background: rgba(56, 189, 248, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(56, 189, 248, 0.15), inset 0 0 20px rgba(56, 189, 248, 0.05);
+  backdrop-filter: blur(12px);
 }
 
 /* ============ ANIMATIONS ============ */
@@ -282,6 +359,17 @@ body {
   from {
     opacity: 0;
     transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -301,22 +389,32 @@ body {
   }
 
   .name {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .name::before {
+    width: 200px;
+    height: 200px;
+    top: -60px;
+    filter: blur(50px);
   }
 
   .role-badge {
     margin-bottom: 20px;
-    font-size: 0.8rem;
-    padding: 6px 14px;
+    font-size: 0.7rem;
+    padding: 8px 16px;
   }
 
   .headline {
     margin-bottom: 15px;
+    line-height: 1.5;
   }
 
   .subtext {
     margin-bottom: 25px;
     font-size: 1rem;
+    line-height: 1.8;
   }
 
   .credentials-strip {
@@ -335,7 +433,7 @@ body {
 
   .btn-primary,
   .btn-secondary {
-    padding: 10px 20px;
+    padding: 11px 22px;
     font-size: 0.9rem;
   }
 }
@@ -351,27 +449,37 @@ body {
 
   .name {
     font-size: 2rem;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    letter-spacing: 0.2px;
+  }
+
+  .name::before {
+    width: 150px;
+    height: 150px;
+    top: -50px;
+    filter: blur(40px);
   }
 
   .role-badge {
     margin-bottom: 15px;
-    font-size: 0.75rem;
-    padding: 5px 12px;
+    font-size: 0.65rem;
+    padding: 7px 12px;
   }
 
   .headline {
     font-size: 1.1rem;
     margin-bottom: 12px;
+    line-height: 1.4;
   }
 
   .accent-pipe {
-    margin: 0 6px;
+    margin: 0 4px;
   }
 
   .subtext {
     margin-bottom: 20px;
     font-size: 0.95rem;
+    line-height: 1.7;
   }
 
   .credentials-strip {
